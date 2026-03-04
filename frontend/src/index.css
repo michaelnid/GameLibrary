@@ -2814,36 +2814,11 @@ tr:hover td {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   text-align: center;
   position: relative;
   z-index: 1;
   padding-top: var(--space-xl);
-}
-
-.home-greeting {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  background: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.home-greeting-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #cbd5e1;
-  letter-spacing: 0.02em;
-}
-
-.home-greeting-subline {
-  font-size: 0.76rem;
-  color: #94a3b8;
 }
 
 .home-title-new {
@@ -2896,27 +2871,6 @@ tr:hover td {
   line-height: 1.5;
 }
 
-.home-hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-.home-hero-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 0.74rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: #bfdbfe;
-  border: 1px solid rgba(96, 165, 250, 0.25);
-  background: rgba(37, 99, 235, 0.14);
-}
-
 /* ===== Games Showcase ===== */
 .home-showcase {
   position: relative;
@@ -2945,11 +2899,12 @@ tr:hover td {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-sm);
-  padding: calc(var(--space-lg) + 8px) var(--space-sm) var(--space-md);
-  min-height: 210px;
+  gap: 10px;
+  padding: 12px var(--space-sm) var(--space-md);
+  min-height: 198px;
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--tile-color) 9%, transparent) 0%, rgba(255, 255, 255, 0.03) 30%, rgba(255, 255, 255, 0.035) 100%);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -2962,20 +2917,28 @@ tr:hover td {
 
 .home-game-tile-glow {
   position: absolute;
-  width: 180px;
-  height: 180px;
-  top: -70px;
+  width: 160px;
+  height: 160px;
+  top: -62px;
   left: 50%;
   transform: translateX(-50%);
-  background: radial-gradient(circle, color-mix(in srgb, var(--tile-color) 24%, transparent) 0%, transparent 70%);
-  opacity: 0.35;
+  background: radial-gradient(circle, color-mix(in srgb, var(--tile-color) 26%, transparent) 0%, transparent 72%);
+  opacity: 0.48;
   transition: opacity 0.35s ease;
 }
 
+.home-game-tile-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
 .home-game-tile-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -2984,7 +2947,7 @@ tr:hover td {
   border: 1px solid color-mix(in srgb, var(--tile-color) 32%, transparent);
   background: color-mix(in srgb, var(--tile-color) 14%, transparent);
   border-radius: 999px;
-  padding: 2px 8px;
+  padding: 3px 9px;
 }
 
 .home-game-tile::before {
@@ -3012,7 +2975,7 @@ tr:hover td {
 }
 
 .home-game-tile:hover .home-game-tile-glow {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 @keyframes tileAppear {
@@ -3028,14 +2991,20 @@ tr:hover td {
 }
 
 .home-game-tile-icon {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   color: var(--tile-color);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--tile-color) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tile-color) 22%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .home-game-tile:hover .home-game-tile-icon {
-  transform: scale(1.12) translateY(-1px);
+  transform: scale(1.08) translateY(-1px);
   filter: drop-shadow(0 0 10px color-mix(in srgb, var(--tile-color) 35%, transparent));
 }
 
@@ -3045,44 +3014,33 @@ tr:hover td {
 }
 
 .home-game-tile-name {
-  font-size: 0.92rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: #f1f5f9;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .home-game-tile-mood {
-  font-size: 0.7rem;
-  color: #9fb1cc;
+  font-size: 0.72rem;
+  color: #afbdd3;
   text-align: center;
   line-height: 1.35;
-  min-height: 1.9em;
+  min-height: 2.05em;
 }
 
 .home-game-tile-type {
-  font-size: 0.68rem;
-  font-weight: 500;
-  color: #64748b;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 2px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: #9fb0c8;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  padding: 3px 9px;
   border-radius: 999px;
   white-space: nowrap;
-}
-
-.home-game-tile-action {
-  margin-top: auto;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--tile-color) 70%, #cbd5e1);
-  opacity: 0.82;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.home-game-tile:hover .home-game-tile-action {
-  opacity: 1;
-  transform: translateY(-1px);
 }
 
 /* ===== Dual CTA Section ===== */
@@ -3383,24 +3341,6 @@ tr:hover td {
     font-size: 1rem;
   }
 
-  .home-greeting {
-    width: 100%;
-    max-width: 360px;
-    border-radius: var(--radius-lg);
-  }
-
-  .home-greeting-title {
-    font-size: 0.82rem;
-  }
-
-  .home-greeting-subline {
-    font-size: 0.72rem;
-  }
-
-  .home-hero-meta {
-    gap: 8px;
-  }
-
   .home-games-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-sm);
@@ -3408,29 +3348,25 @@ tr:hover td {
 
   .home-game-tile {
     padding: var(--space-md) var(--space-xs);
-    min-height: 188px;
+    min-height: 178px;
   }
 
   .home-game-tile-icon {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
   }
 
   .home-game-tile-name {
-    font-size: 0.78rem;
+    font-size: 0.84rem;
   }
 
   .home-game-tile-mood {
-    font-size: 0.62rem;
+    font-size: 0.6rem;
   }
 
   .home-game-tile-type {
-    font-size: 0.6rem;
+    font-size: 0.56rem;
     padding: 2px 7px;
-  }
-
-  .home-game-tile-action {
-    font-size: 0.62rem;
   }
 
   .home-cta-section {
@@ -3492,7 +3428,6 @@ tr:hover td {
 
   .home-game-tile,
   .home-game-tile-icon,
-  .home-game-tile-action,
   .home-quick-pill {
     transition: none !important;
   }

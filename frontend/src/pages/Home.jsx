@@ -1,28 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import changelog from '../data/changelog';
-import { useAuth } from '../contexts/AuthContext';
 
 export default function Home() {
-    const { user } = useAuth();
     const [showChangelog, setShowChangelog] = useState(false);
     const currentVersion = changelog[0]?.version || '1.0.0';
-    const now = new Date();
-    const weekday = new Intl.DateTimeFormat('de-DE', { weekday: 'long' }).format(now);
-    const rawName = user?.displayName || user?.username || '';
-    const username = rawName.trim().split(/\s+/)[0] || '';
-    const hour = now.getHours();
-    const nameSuffix = username ? `, ${username}` : '';
-    const greetingTitle = hour < 11
-        ? `Guten Morgen${nameSuffix}`
-        : hour < 18
-            ? `Hallo${nameSuffix}`
-            : `Guten Abend${nameSuffix}`;
-    const greetingSubline = hour < 11
-        ? 'Perfekt für einen schnellen Start in den Tag.'
-        : hour < 18
-            ? 'Zeit für eine neue Runde und frische Punkte.'
-            : 'Ideal für einen entspannten Spieleabend mit Freunden.';
 
     const games = [
         {
@@ -168,10 +150,6 @@ export default function Home() {
 
             {/* Hero Section */}
             <div className="home-hero">
-                <div className="home-greeting">
-                    <span className="home-greeting-title">{greetingTitle}</span>
-                    <span className="home-greeting-subline">{greetingSubline}</span>
-                </div>
                 <h1 className="home-title-new">
                     <span className="home-title-label">MIKE</span>
                     <span className="home-title-gradient">Game Library</span>
@@ -179,10 +157,6 @@ export default function Home() {
                 <p className="home-tagline">
                     Dein digitaler Spieleabend — würfle, spiele und gewinne
                 </p>
-                <div className="home-hero-meta">
-                    <span className="home-hero-pill">Heute ist {weekday}</span>
-                    <span className="home-hero-pill">Lokal + Multiplayer Ready</span>
-                </div>
             </div>
 
             {/* Games Showcase */}
@@ -199,14 +173,15 @@ export default function Home() {
                             }}
                         >
                             <div className="home-game-tile-glow" aria-hidden="true" />
-                            <span className="home-game-tile-badge">{game.badge}</span>
+                            <div className="home-game-tile-head">
+                                <span className="home-game-tile-badge">{game.badge}</span>
+                                <span className="home-game-tile-type">{game.type}</span>
+                            </div>
                             <div className="home-game-tile-icon">
                                 {game.icon}
                             </div>
                             <span className="home-game-tile-name">{game.name}</span>
                             <span className="home-game-tile-mood">{game.mood}</span>
-                            <span className="home-game-tile-type">{game.type}</span>
-                            <span className="home-game-tile-action">Jetzt starten</span>
                         </div>
                     ))}
                 </div>
