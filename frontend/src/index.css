@@ -2876,7 +2876,7 @@ tr:hover td {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 900px;
+  max-width: 980px;
 }
 
 .home-section-label {
@@ -2900,8 +2900,8 @@ tr:hover td {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: 12px var(--space-sm) var(--space-md);
-  min-height: 198px;
+  padding: 16px var(--space-md) var(--space-md);
+  min-height: 218px;
   border-radius: var(--radius-lg);
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--tile-color) 9%, transparent) 0%, rgba(255, 255, 255, 0.03) 30%, rgba(255, 255, 255, 0.035) 100%);
@@ -2917,37 +2917,14 @@ tr:hover td {
 
 .home-game-tile-glow {
   position: absolute;
-  width: 160px;
-  height: 160px;
-  top: -62px;
+  width: 180px;
+  height: 180px;
+  top: -70px;
   left: 50%;
   transform: translateX(-50%);
   background: radial-gradient(circle, color-mix(in srgb, var(--tile-color) 26%, transparent) 0%, transparent 72%);
   opacity: 0.48;
   transition: opacity 0.35s ease;
-}
-
-.home-game-tile-head {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-xs);
-}
-
-.home-game-tile-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: color-mix(in srgb, var(--tile-color) 68%, #ffffff);
-  border: 1px solid color-mix(in srgb, var(--tile-color) 32%, transparent);
-  background: color-mix(in srgb, var(--tile-color) 14%, transparent);
-  border-radius: 999px;
-  padding: 3px 9px;
 }
 
 .home-game-tile::before {
@@ -2991,8 +2968,8 @@ tr:hover td {
 }
 
 .home-game-tile-icon {
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
   color: var(--tile-color);
   border-radius: 16px;
   background: color-mix(in srgb, var(--tile-color) 10%, transparent);
@@ -3014,7 +2991,8 @@ tr:hover td {
 }
 
 .home-game-tile-name {
-  font-size: 1rem;
+  margin-top: 2px;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #f1f5f9;
   text-align: center;
@@ -3022,25 +3000,11 @@ tr:hover td {
 }
 
 .home-game-tile-mood {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: #afbdd3;
   text-align: center;
   line-height: 1.35;
   min-height: 2.05em;
-}
-
-.home-game-tile-type {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.62rem;
-  font-weight: 600;
-  color: #9fb0c8;
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(148, 163, 184, 0.25);
-  padding: 3px 9px;
-  border-radius: 999px;
-  white-space: nowrap;
 }
 
 /* ===== Dual CTA Section ===== */
@@ -3348,25 +3312,20 @@ tr:hover td {
 
   .home-game-tile {
     padding: var(--space-md) var(--space-xs);
-    min-height: 178px;
+    min-height: 186px;
   }
 
   .home-game-tile-icon {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
   }
 
   .home-game-tile-name {
-    font-size: 0.84rem;
+    font-size: 0.92rem;
   }
 
   .home-game-tile-mood {
-    font-size: 0.6rem;
-  }
-
-  .home-game-tile-type {
-    font-size: 0.56rem;
-    padding: 2px 7px;
+    font-size: 0.64rem;
   }
 
   .home-cta-section {
