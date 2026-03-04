@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build-Output
+frontend/dist/
+
+# Environment / Secrets
+.env
+!.env.example
+
+# Release-Artefakte
+*.tar.gz
+*.sha256
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# AI Agent Rules
+.gemini/
+.agents/
+.agent/
+_agents/
+_agent/
+.codex/
