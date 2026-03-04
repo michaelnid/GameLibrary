@@ -1,5 +1,18 @@
 const changelog = [
     {
+        version: '5.7.0',
+        date: '2026-03-04',
+        title: 'Homepage Redesign',
+        changes: [
+            'Hauptseite: Komplett neues Premium-Design mit animiertem Gradient-Mesh Hintergrund',
+            'Hauptseite: Grosser Hero-Titel mit animiertem Farbverlauf',
+            'Hauptseite: Spiele-Showcase mit 6 individuellen Game-Tiles und SVG-Icons',
+            'Hauptseite: Zwei grosse CTA-Karten (Lokal & Multiplayer) mit Glow-Effekten',
+            'Hauptseite: Quick-Action Pills fuer Highscores und Changelog',
+            'Hauptseite: Stagger-Animationen beim Laden der Elemente'
+        ]
+    },
+    {
         version: '5.6.0',
         date: '2026-03-03',
         title: 'Schiffe Versenken',
