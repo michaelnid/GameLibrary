@@ -2666,6 +2666,7 @@ tr:hover td {
 /* ===== Home Page – Premium Redesign ===== */
 .home-page {
   position: relative;
+  isolation: isolate;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -2720,6 +2721,32 @@ tr:hover td {
   animation: meshFloat3 16s ease-in-out infinite alternate;
 }
 
+.home-bg-scanline {
+  position: absolute;
+  inset: -15%;
+  opacity: 0.3;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 65%),
+    repeating-linear-gradient(110deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 14px);
+  animation: meshScan 24s linear infinite;
+}
+
+.home-bg-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4) 0.5px, transparent 1px),
+    radial-gradient(circle at 80% 60%, rgba(255, 255, 255, 0.35) 0.5px, transparent 1px);
+  background-size: 5px 5px, 7px 7px;
+  mix-blend-mode: soft-light;
+  animation: grainShift 6s steps(8) infinite;
+}
+
 @keyframes meshFloat1 {
   0% {
     transform: translate(0, 0) scale(1);
@@ -2750,12 +2777,73 @@ tr:hover td {
   }
 }
 
+@keyframes meshScan {
+  0% {
+    transform: translate3d(-2%, 0, 0) rotate(0.001deg);
+  }
+
+  100% {
+    transform: translate3d(2%, -1%, 0) rotate(0.001deg);
+  }
+}
+
+@keyframes grainShift {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(0.7%, -0.5%);
+  }
+
+  50% {
+    transform: translate(-0.5%, 0.6%);
+  }
+
+  75% {
+    transform: translate(0.5%, 0.4%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
 /* ===== Hero Section ===== */
 .home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
   text-align: center;
   position: relative;
   z-index: 1;
   padding-top: var(--space-xl);
+}
+
+.home-greeting {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.home-greeting-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  letter-spacing: 0.02em;
+}
+
+.home-greeting-subline {
+  font-size: 0.76rem;
+  color: #94a3b8;
 }
 
 .home-title-new {
@@ -2808,6 +2896,27 @@ tr:hover td {
   line-height: 1.5;
 }
 
+.home-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.home-hero-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #bfdbfe;
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  background: rgba(37, 99, 235, 0.14);
+}
+
 /* ===== Games Showcase ===== */
 .home-showcase {
   position: relative;
@@ -2837,7 +2946,8 @@ tr:hover td {
   flex-direction: column;
   align-items: center;
   gap: var(--space-sm);
-  padding: var(--space-lg) var(--space-sm);
+  padding: calc(var(--space-lg) + 8px) var(--space-sm) var(--space-md);
+  min-height: 210px;
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -2848,6 +2958,33 @@ tr:hover td {
   animation: tileAppear 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   position: relative;
   overflow: hidden;
+}
+
+.home-game-tile-glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  top: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--tile-color) 24%, transparent) 0%, transparent 70%);
+  opacity: 0.35;
+  transition: opacity 0.35s ease;
+}
+
+.home-game-tile-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--tile-color) 68%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--tile-color) 32%, transparent);
+  background: color-mix(in srgb, var(--tile-color) 14%, transparent);
+  border-radius: 999px;
+  padding: 2px 8px;
 }
 
 .home-game-tile::before {
@@ -2863,7 +3000,7 @@ tr:hover td {
 }
 
 .home-game-tile:hover {
-  transform: translateY(-6px) scale(1.04);
+  transform: translateY(-7px) scale(1.035);
   border-color: color-mix(in srgb, var(--tile-color) 35%, transparent);
   box-shadow:
     0 16px 48px color-mix(in srgb, var(--tile-color) 15%, transparent),
@@ -2872,6 +3009,10 @@ tr:hover td {
 
 .home-game-tile:hover::before {
   opacity: 1;
+}
+
+.home-game-tile:hover .home-game-tile-glow {
+  opacity: 0.8;
 }
 
 @keyframes tileAppear {
@@ -2890,11 +3031,12 @@ tr:hover td {
   width: 48px;
   height: 48px;
   color: var(--tile-color);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .home-game-tile:hover .home-game-tile-icon {
-  transform: scale(1.15);
+  transform: scale(1.12) translateY(-1px);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--tile-color) 35%, transparent));
 }
 
 .home-game-tile-icon svg {
@@ -2903,9 +3045,17 @@ tr:hover td {
 }
 
 .home-game-tile-name {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: #e2e8f0;
+}
+
+.home-game-tile-mood {
+  font-size: 0.7rem;
+  color: #9fb1cc;
+  text-align: center;
+  line-height: 1.35;
+  min-height: 1.9em;
 }
 
 .home-game-tile-type {
@@ -2917,6 +3067,22 @@ tr:hover td {
   padding: 2px 10px;
   border-radius: 999px;
   white-space: nowrap;
+}
+
+.home-game-tile-action {
+  margin-top: auto;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--tile-color) 70%, #cbd5e1);
+  opacity: 0.82;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.home-game-tile:hover .home-game-tile-action {
+  opacity: 1;
+  transform: translateY(-1px);
 }
 
 /* ===== Dual CTA Section ===== */
@@ -3217,6 +3383,24 @@ tr:hover td {
     font-size: 1rem;
   }
 
+  .home-greeting {
+    width: 100%;
+    max-width: 360px;
+    border-radius: var(--radius-lg);
+  }
+
+  .home-greeting-title {
+    font-size: 0.82rem;
+  }
+
+  .home-greeting-subline {
+    font-size: 0.72rem;
+  }
+
+  .home-hero-meta {
+    gap: 8px;
+  }
+
   .home-games-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-sm);
@@ -3224,6 +3408,7 @@ tr:hover td {
 
   .home-game-tile {
     padding: var(--space-md) var(--space-xs);
+    min-height: 188px;
   }
 
   .home-game-tile-icon {
@@ -3235,9 +3420,17 @@ tr:hover td {
     font-size: 0.78rem;
   }
 
+  .home-game-tile-mood {
+    font-size: 0.62rem;
+  }
+
   .home-game-tile-type {
     font-size: 0.6rem;
     padding: 2px 7px;
+  }
+
+  .home-game-tile-action {
+    font-size: 0.62rem;
   }
 
   .home-cta-section {
@@ -3285,6 +3478,23 @@ tr:hover td {
 @media (max-width: 400px) {
   .home-games-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-mesh-orb,
+  .home-bg-scanline,
+  .home-bg-noise,
+  .home-title-gradient,
+  .home-game-tile {
+    animation: none !important;
+  }
+
+  .home-game-tile,
+  .home-game-tile-icon,
+  .home-game-tile-action,
+  .home-quick-pill {
+    transition: none !important;
   }
 }
 

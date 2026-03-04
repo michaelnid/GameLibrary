@@ -1,16 +1,36 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import changelog from '../data/changelog';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Home() {
+    const { user } = useAuth();
     const [showChangelog, setShowChangelog] = useState(false);
     const currentVersion = changelog[0]?.version || '1.0.0';
+    const now = new Date();
+    const weekday = new Intl.DateTimeFormat('de-DE', { weekday: 'long' }).format(now);
+    const rawName = user?.displayName || user?.username || '';
+    const username = rawName.trim().split(/\s+/)[0] || '';
+    const hour = now.getHours();
+    const nameSuffix = username ? `, ${username}` : '';
+    const greetingTitle = hour < 11
+        ? `Guten Morgen${nameSuffix}`
+        : hour < 18
+            ? `Hallo${nameSuffix}`
+            : `Guten Abend${nameSuffix}`;
+    const greetingSubline = hour < 11
+        ? 'Perfekt für einen schnellen Start in den Tag.'
+        : hour < 18
+            ? 'Zeit für eine neue Runde und frische Punkte.'
+            : 'Ideal für einen entspannten Spieleabend mit Freunden.';
 
     const games = [
         {
             name: 'Kniffel',
             type: 'Lokal & Online',
             color: '#f59e0b',
+            mood: 'Würfelglück trifft Taktik',
+            badge: 'Klassiker',
             icon: (
                 <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="6" y="6" width="16" height="16" rx="3" />
@@ -39,6 +59,8 @@ export default function Home() {
             name: 'Phase 10',
             type: 'Lokal & Online',
             color: '#8b5cf6',
+            mood: 'Lange Strategie mit Twist',
+            badge: 'Challenge',
             icon: (
                 <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="8" y="4" width="32" height="40" rx="4" />
@@ -54,6 +76,8 @@ export default function Home() {
             name: 'TicTacToe',
             type: 'Online',
             color: '#3b82f6',
+            mood: 'Schnell, smart, direkt',
+            badge: 'Schnell',
             icon: (
                 <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="16" y1="8" x2="16" y2="40" />
@@ -75,6 +99,8 @@ export default function Home() {
             name: 'Vier Gewinnt',
             type: 'Online',
             color: '#ef4444',
+            mood: 'Druck auf jeder Reihe',
+            badge: 'Beliebt',
             icon: (
                 <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="4" y="8" width="40" height="32" rx="4" />
@@ -94,6 +120,8 @@ export default function Home() {
             name: 'Battleship',
             type: 'Online',
             color: '#06b6d4',
+            mood: 'Radar an, Treffer setzen',
+            badge: 'Duell',
             icon: (
                 <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M6 30 C6 30 10 24 24 24 C38 24 42 30 42 30" />
@@ -114,6 +142,8 @@ export default function Home() {
             name: 'UNO',
             type: 'Online',
             color: '#22c55e',
+            mood: 'Chaos, Karten, Comeback',
+            badge: 'Party',
             icon: (
                 <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="6" y="8" width="24" height="32" rx="4" transform="rotate(-8 18 24)" />
@@ -132,10 +162,16 @@ export default function Home() {
                 <div className="home-mesh-orb home-mesh-orb-1" />
                 <div className="home-mesh-orb home-mesh-orb-2" />
                 <div className="home-mesh-orb home-mesh-orb-3" />
+                <div className="home-bg-scanline" />
+                <div className="home-bg-noise" />
             </div>
 
             {/* Hero Section */}
             <div className="home-hero">
+                <div className="home-greeting">
+                    <span className="home-greeting-title">{greetingTitle}</span>
+                    <span className="home-greeting-subline">{greetingSubline}</span>
+                </div>
                 <h1 className="home-title-new">
                     <span className="home-title-label">MIKE</span>
                     <span className="home-title-gradient">Game Library</span>
@@ -143,6 +179,10 @@ export default function Home() {
                 <p className="home-tagline">
                     Dein digitaler Spieleabend — würfle, spiele und gewinne
                 </p>
+                <div className="home-hero-meta">
+                    <span className="home-hero-pill">Heute ist {weekday}</span>
+                    <span className="home-hero-pill">Lokal + Multiplayer Ready</span>
+                </div>
             </div>
 
             {/* Games Showcase */}
@@ -158,11 +198,15 @@ export default function Home() {
                                 animationDelay: `${i * 80}ms`
                             }}
                         >
+                            <div className="home-game-tile-glow" aria-hidden="true" />
+                            <span className="home-game-tile-badge">{game.badge}</span>
                             <div className="home-game-tile-icon">
                                 {game.icon}
                             </div>
                             <span className="home-game-tile-name">{game.name}</span>
+                            <span className="home-game-tile-mood">{game.mood}</span>
                             <span className="home-game-tile-type">{game.type}</span>
+                            <span className="home-game-tile-action">Jetzt starten</span>
                         </div>
                     ))}
                 </div>
