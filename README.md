@@ -2,6 +2,10 @@
 
 Webbasierte Spielebibliothek mit Online-Multiplayer.
 
+<p align="center">
+  <img src="home.png" alt="MIKE Game Library - Startseite" width="800">
+</p>
+
 ## Tech-Stack
 
 | Bereich | Technologie |
