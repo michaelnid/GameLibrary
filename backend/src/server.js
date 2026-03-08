@@ -188,7 +188,7 @@ function rateLimitKeyGenerator(req) {
     try {
         const token = readCookie(req, ACCESS_COOKIE);
         if (token) {
-            const decoded = jwt.decode(token);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
             if (decoded && decoded.userId) {
                 return `user_${decoded.userId}`;
             }

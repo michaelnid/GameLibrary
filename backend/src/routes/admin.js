@@ -5,6 +5,19 @@ const { authenticate, requireRole } = require('../middleware/auth');
 const router = express.Router();
 const TOKEN_TTL_MS = 30000; // 30 seconds
 
+function isLoopbackAddress(value) {
+    if (!value) return false;
+    const normalized = String(value).trim().toLowerCase();
+    if (!normalized) return false;
+    if (normalized === '127.0.0.1' || normalized === '::1' || normalized === '::ffff:127.0.0.1') {
+        return true;
+    }
+    if (normalized.startsWith('::ffff:')) {
+        return normalized.slice(7) === '127.0.0.1';
+    }
+    return false;
+}
+
 // In-memory token store (no filesystem permissions needed)
 const pmaTokens = new Map();
 
@@ -12,8 +25,9 @@ const pmaTokens = new Map();
 // Internal endpoint called by PHP signon script (localhost only)
 // This route MUST be before the auth middleware
 router.get('/pma-validate', (req, res) => {
-    const ip = req.ip || req.connection?.remoteAddress || '';
-    const isLocal = ip === '127.0.0.1' || ip === '::1' || ip === '::ffff:127.0.0.1';
+    // Use the direct socket address to avoid trust-proxy/X-Forwarded-For spoofing.
+    const remoteAddress = req.socket?.remoteAddress || req.connection?.remoteAddress || '';
+    const isLocal = isLoopbackAddress(remoteAddress);
     if (!isLocal) {
         return res.status(403).json({ error: 'Nur lokal erlaubt' });
     }
