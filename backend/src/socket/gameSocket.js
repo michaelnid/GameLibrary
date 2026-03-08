@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { parseCookieHeader } = require('../utils/cookies');
+const { MultiplayerRoom, MultiplayerPlayer } = require('../models');
 
 // In-memory cache for game live state (dice selection + current player)
 const gameStates = new Map();
@@ -15,6 +16,13 @@ function toPositiveInt(value) {
 function normalizeGameId(gameId) {
     const parsed = toPositiveInt(gameId);
     return parsed ? String(parsed) : null;
+}
+
+function normalizeRoomCode(roomCode) {
+    if (!roomCode || typeof roomCode !== 'string') return null;
+    const code = roomCode.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 4);
+    if (code.length !== 4) return null;
+    return code;
 }
 
 function parseSocketToken(socket) {
@@ -207,19 +215,31 @@ function setupGameSocket(io) {
             socket.to(`game:${normalizedGameId}`).emit('turnChanged', payload);
         });
 
-        // Multiplayer: Client joins a multiplayer room
-        socket.on('mp:joinRoom', (roomCode) => {
-            if (!roomCode || typeof roomCode !== 'string') return;
-            const code = roomCode.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
-            if (code.length < 4 || code.length > 8) return;
+        // Multiplayer: Client joins a multiplayer room (requires authentication + membership)
+        socket.on('mp:joinRoom', async (roomCode) => {
+            if (!socket.data?.userId) return;
+
+            const code = normalizeRoomCode(roomCode);
+            if (!code) return;
+
+            const membership = await MultiplayerPlayer.findOne({
+                where: { userId: socket.data.userId },
+                include: [{
+                    model: MultiplayerRoom,
+                    as: 'room',
+                    required: true,
+                    where: { code }
+                }]
+            });
+
+            if (!membership) return;
             socket.join(`mp:${code}`);
         });
 
         // Multiplayer: Client leaves a multiplayer room
         socket.on('mp:leaveRoom', (roomCode) => {
-            if (!roomCode || typeof roomCode !== 'string') return;
-            const code = roomCode.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
-            if (code.length < 4 || code.length > 8) return;
+            const code = normalizeRoomCode(roomCode);
+            if (!code) return;
             socket.leave(`mp:${code}`);
         });
 
